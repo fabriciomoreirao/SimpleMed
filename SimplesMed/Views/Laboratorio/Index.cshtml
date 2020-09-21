@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="modal fade " id="laboratorioModal" tabindex="-1" aria-labelledby="laboratorioModalLabel" aria-hidden="true" data-bind="with: Laboratorio">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="laboratorioModalLabel">Cadastro de Laboratorio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome da unidade</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: title" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Observação</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" data-bind="value: description" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Unidade Pública</label>
+                        <input class="col-sm-1" type="checkbox" data-bind="checked: isPublic" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Celular</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: mobile" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Telefone</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: phone" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: email" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cep</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: zip" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Logradouro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Número</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: number" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Complemento</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: complement" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Bairro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: town" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cidade</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: district" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>UF</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: uf" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.SalvarLaboratorio">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4">
+            <a href="#" class="btn btn-primary btn-xs pull-right" data-bind="click: $root.LimparModal" data-toggle="modal" data-target="#laboratorioModal"><b>+</b> Cadastrar Laboratório</a>
+        </div>
+    </div>
+    <div class="row col-md-12  custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $root.ListaLaboratorios">
+                <tr>
+                    <td data-bind="text: title"></td>
+                    <td class="text-center"><a class='btn btn-info btn-xs' data-bind="click: $root.Edit"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    var ScreenModel = function () {
+        var self = this;
+        self.Laboratorio = new laboratorioModel();
+        var src = @Html.Raw(Json.Serialize(Model))
+        self.ListaLaboratorios = ko.observableArray(src);
+
+        self.SalvarLaboratorio = function () {
+            $.ajax({
+                url: "@Url.Action("Salvar")",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON(self.Laboratorio),
+                 cache: false,
+                success: function (data) {
+
+                     $("#laboratorioModal").modal("hide");
+                     window.location.href = "@Url.Action("Index")";
+                 }
+                });
+        };
+
+        self.Edit = function (item) {
+            $("#laboratorioModal").modal("show");
+            self.Laboratorio.id(item.id);
+            self.Laboratorio.title(item.title);
+            self.Laboratorio.description(item.description);
+            self.Laboratorio.email(item.email);
+            self.Laboratorio.phone(item.phone);
+            self.Laboratorio.mobile(item.mobile);
+            self.Laboratorio.address(item.address);
+            self.Laboratorio.number(item.number);
+            self.Laboratorio.complement(item.complement);
+            self.Laboratorio.district(item.district);
+            self.Laboratorio.town(item.town);
+            self.Laboratorio.uf(item.uf);
+            self.Laboratorio.zip(item.zip);
+            self.Laboratorio.isPublic(item.isPublic);
+        };
+        self.LimparModal = function () {
+            self.Laboratorio.id(null);
+            self.Laboratorio.title("");
+            self.Laboratorio.description("");
+            self.Laboratorio.email("");
+            self.Laboratorio.phone("");
+            self.Laboratorio.mobile("");
+            self.Laboratorio.address("");
+            self.Laboratorio.number("");
+            self.Laboratorio.complement("");
+            self.Laboratorio.district("");
+            self.Laboratorio.town("");
+            self.Laboratorio.uf("");
+            self.Laboratorio.zip("");
+
+
+            self.Laboratorio.isPublic(false);
+        };
+    };
+    var laboratorioModel = function () {
+        var self = this;
+        self.id = ko.observable(null);
+        self.title = ko.observable();
+        self.description = ko.observable();
+        self.email = ko.observable();
+        self.phone = ko.observable();
+        self.mobile = ko.observable();
+        self.address = ko.observable();
+        self.number = ko.observable();
+        self.complement = ko.observable();
+        self.district = ko.observable();
+        self.town = ko.observable();
+        self.uf = ko.observable();
+        self.zip = ko.observable();
+        self.latitude = ko.observable();
+        self.longitude = ko.observable();
+        self.isPublic = ko.observable(false);
+    };
+</script>

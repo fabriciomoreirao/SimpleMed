@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="modal fade " id="unidadeModal" tabindex="-1" aria-labelledby="unidadeModalLabel" aria-hidden="true" data-bind="with: Unidade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unidadeModalLabel">Cadastro de Unidade</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome da unidade</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: title" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Observação</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" data-bind="value: description" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Unidade Pública</label>
+                        <input class="col-sm-1" type="checkbox" data-bind="checked: isPublic" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Celular</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: mobile" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Telefone</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: phone" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: email" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cep</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: zip" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Logradouro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Número</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: number" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Complemento</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: complement" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Bairro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: town" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cidade</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: district" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>UF</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: uf" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.SalvarUnidade">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4">
+            <a href="#" class="btn btn-primary btn-xs pull-right" data-bind="click: $root.LimparModal" data-toggle="modal" data-target="#unidadeModal"><b>+</b> Cadastrar Unidade</a>
+        </div>
+    </div>
+    <div class="row col-md-12  custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $root.ListaUnidades">
+                <tr>
+                    <td data-bind="text: title"></td>
+                    <td class="text-center"><a class='btn btn-info btn-xs' data-bind="click: $root.Edit"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    var ScreenModel = function () {
+        var self = this;
+        self.Unidade = new unidadeModel();
+        var src = @Html.Raw(Json.Serialize(Model))
+        self.ListaUnidades = ko.observableArray(src);
+
+        self.SalvarUnidade = function () {
+            $.ajax({
+                    url: "@Url.Action("Salvar")",
+                    type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON(self.Unidade),
+                 cache: false,
+                success: function (data) {
+                    $("#unidadeModal").modal("hide");
+                      window.location.href = "@Url.Action("Index")";
+
+
+                 }
+                });
+        };
+
+        self.Edit = function (item) {
+            $("#unidadeModal").modal("show");
+            self.Unidade.id(item.id);
+            self.Unidade.title(item.title);
+            self.Unidade.description(item.description);
+            self.Unidade.email(item.email);
+            self.Unidade.phone(item.phone);
+            self.Unidade.mobile(item.mobile);
+            self.Unidade.address(item.address);
+            self.Unidade.number(item.number);
+            self.Unidade.complement(item.complement);
+            self.Unidade.district(item.district);
+            self.Unidade.town(item.town);
+            self.Unidade.uf(item.uf);
+            self.Unidade.zip(item.zip);
+            self.Unidade.isPublic(item.isPublic);
+        };
+        self.LimparModal = function () {
+            self.Unidade.id(null);
+            self.Unidade.title("");
+            self.Unidade.description("");
+            self.Unidade.email("");
+            self.Unidade.phone("");
+            self.Unidade.mobile("");
+            self.Unidade.address("");
+            self.Unidade.number("");
+            self.Unidade.complement("");
+            self.Unidade.district("");
+            self.Unidade.town("");
+            self.Unidade.uf("");
+            self.Unidade.zip("");
+            self.Unidade.isPublic(false);
+        };
+    };
+    var unidadeModel = function () {
+        var self = this;
+        self.id = ko.observable(null);
+        self.title = ko.observable();
+        self.description = ko.observable();
+        self.email = ko.observable();
+        self.phone = ko.observable();
+        self.mobile = ko.observable();
+        self.address = ko.observable();
+        self.number = ko.observable();
+        self.complement = ko.observable();
+        self.district = ko.observable();
+        self.town = ko.observable();
+        self.uf = ko.observable();
+        self.zip = ko.observable();
+        self.latitude = ko.observable();
+        self.longitude = ko.observable();
+        self.isPublic = ko.observable(false);
+    };
+</script>

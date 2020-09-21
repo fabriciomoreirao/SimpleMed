@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="text-body">
+                <div class="card bg-success mb-3">
+                    <div class="card-body">
+                        <i class="fas fa-diagnoses fa-4x" style="color:white;"></i></br>
+                        <h6 class="text-secondary" style="color:white;">1</h6>
+                        <h5 style="color:white;">Exames Pendentes</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="text-body">
+                <div class="card bg-primary mb-3">
+                    <div class="card-body">
+                        <i class="fas fa-calendar-week  fa-4x" style="color:white;"></i></br>
+                        <h6 style="color:white;" class="text-secondary">2</h6>
+                        <h5 style="color:white;">Agendamentos do dia</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+       
+
+    </div>
+</div>
+
+
+<script>
+    var ScreenModel = function () {
+        var self = this;
+        console.log("ok");
+        self.Login = new loginModel();
+
+        self.Logar = function () {
+             $.ajax({
+                    url: "@Url.Action("Logar","Login")",
+                    type: "POST",
+                 contentType: "application/json; charset=utf-8",
+                 data: ko.toJSON(self.Login),
+                 cache: false,
+                 success: function (data) {
+
+                 }
+                });
+        };
+    };
+    var loginModel = function () {
+        var self = this;
+
+        self.email = ko.observable();
+        self.password = ko.observable();
+
+    };
+
+</script>
+

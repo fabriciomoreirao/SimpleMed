@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<style>
+    #calendar {
+        max-width: 1100px;
+        margin: 40px auto;
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.min.css" rel="stylesheet" />
+
+
+<div id='calendar'>
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/locales-all.min.js"></script>
+
+<script>
+    var ScreenModel = function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                selectable: true,
+                slotMinTime: '08:00',
+                slotMaxTime: '20:00',
+                slotDuration: '00:15:00',                
+                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+                height: "auto",
+                locale: 'pt-br',
+                nowIndicator: true,
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                dateClick: function (info) {
+                    alert('clicked ' + info.dateStr);
+                },
+                select: function (info) {
+                    alert('selected ' + info.startStr + ' to ' + info.endStr);
+                },
+                events: function (info, successCallback, failureCallback) {
+
+                    $.ajax({
+                    url: "@Url.Action("GetAgendamentosCalendario")",
+                    type: "GET",
+                    cache: false,
+                        success: function (data) {
+                            console.log(data);
+                        successCallback(data);
+                        //console.log(info)
+                        //$("#Today").datepicker("update", info.startStr);
+                        //$("#Today").datepicker("setDate", moment(info.startStr, 'DD/MM/YYYY').format('YYYY-MM-DD'));
+                        //$("#Today").datepicker().datepicker("setDate", info.startStr);
+
+                    },
+                    error: function (err) {
+
+                        failureCallback(err.responseText);
+
+                    }
+                });
+
+                },
+
+
+            });
+
+            calendar.render();
+        });
+    };
+</script>
+

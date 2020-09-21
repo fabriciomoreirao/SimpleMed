@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="modal fade " id="profissionalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bind="with: Profissional">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastro de Profissional</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>CPF</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: document" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label>Especialidade</label>
+                        <div class="row">
+                            <div class="col-sm-11">
+                                <select class="form-control" data-bind="options: $root.specials, optionsValue: 'id', optionsText: 'title', value: especialId, optionsCaption: 'Selecione...'"></select>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <a href="#" class="btn btn-primary btn-sm pull-right" data-bind="click: $root.AddEspecialidade"><b>+</b></a>
+                            </div>
+                        </div>
+                        <div class="row col-md-12  custyle" data-bind="visible: specialties() != 0">
+                            <table class="table table-striped custab">
+                                <thead>
+                                    <tr>
+                                        <th>Especialidade</th>
+                                        <th class="text-center">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: specialties">
+                                    <tr>
+                                        <td data-bind="text: title"></td>
+                                        <td class="text-center"><a href="#" data-bind="click: $root.RemoveEspecialidade" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cep</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: zip" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Logradouro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Número</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: number" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Complemento</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: complement" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Bairro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: town" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cidade</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: district" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>UF</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: uf" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.SalvarProfissional">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4">
+            <a href="#" class="btn btn-primary btn-xs pull-right" data-bind="click: $root.LimparModal" data-toggle="modal" data-target="#profissionalModal"><b>+</b> Cadastrar Profissional</a>
+        </div>
+    </div>
+    <div class="row col-md-12  custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $root.ListaProfissional">
+                <tr>
+                    <td data-bind="text: name"></td>
+                    <td class="text-center"><a class='btn btn-info btn-xs' data-bind="click: $root.Edit"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    var ScreenModel = function () {
+        var self = this;
+        self.Profissional = new profissionalModel();
+        var src = @Html.Raw(Json.Serialize(Model))
+        self.ListaProfissional = ko.observableArray(src);
+
+        self.SalvarProfissional = function () {
+             $.ajax({
+                    url: "@Url.Action("Salvar")",
+                    type: "POST",
+                 contentType: "application/json; charset=utf-8",
+                 data: ko.toJSON(self.Profissional),
+                 cache: false,
+                 success: function (data) {            
+                     
+                     
+                     $("#profissionalModal").modal("hide");
+
+                     window.location.href = "@Url.Action("Index")";
+                 }
+                });
+        };
+
+        self.Edit = function (item) {
+            $("#profissionalModal").modal("show");
+            self.Profissional.id(item.id);
+            self.Profissional.name(item.name);
+            self.Profissional.document(item.document);
+            self.Profissional.address(item.address);
+            self.Profissional.number(item.number);
+            self.Profissional.complement(item.complement);
+            self.Profissional.district(item.district);
+            self.Profissional.town(item.town);
+            self.Profissional.uf(item.uf);
+            self.Profissional.zip(item.zip);
+
+        };
+        self.specials = ko.observableArray();
+        self.RemoveEspecialidade = function (item) {
+            self.Profissional.specialties.remove(item);
+        };
+        self.AddEspecialidade = function () {
+            ko.utils.arrayForEach(self.specials(), function (i) {
+                if (self.Profissional.especialId() == i.id) {
+                    self.Profissional.specialties.push(i);
+                };
+            });
+
+        }
+
+        $.getJSON("https://simplemed.herokuapp.com/specials", function (item) {
+            ko.utils.arrayPushAll(self.specials, item);
+        });
+
+        self.LimparModal = function () {
+            self.Profissional.id(null);
+            self.Profissional.name(null);
+            self.Profissional.document(null);
+            self.Profissional.address(null);
+            self.Profissional.number(null);
+            self.Profissional.complement(null);
+            self.Profissional.district(null);
+            self.Profissional.town(null);
+            self.Profissional.uf(null);
+            self.Profissional.zip(null);
+        };
+    };
+    var profissionalModel = function () {
+        var self = this;
+        self.id = ko.observable(null);
+        self.name = ko.observable();
+        self.document = ko.observable();
+        self.address = ko.observable();
+        self.number = ko.observable();
+        self.complement = ko.observable();
+        self.district = ko.observable();
+        self.town = ko.observable();
+        self.uf = ko.observable();
+        self.zip = ko.observable();
+        self.especialId = ko.observable();
+        self.specialties = ko.observableArray();
+    };
+</script>
+

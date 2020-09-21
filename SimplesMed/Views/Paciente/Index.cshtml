@@ -1,0 +1,285 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="modal fade " id="pacienteModal" tabindex="-1" aria-labelledby="laboratorioModalLabel" aria-hidden="true" data-bind="with: Paciente">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="laboratorioModalLabel">Cadastro de Paciente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome completo</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Data Nascimento</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="datetime" data-bind="value: birthdate" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Sexo</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: gender" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome da mãe</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: mon" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome do pai</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: dad" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>CPF</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: cpf" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>CNS</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: cns" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Celular</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: mobile" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Telefone</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: phone" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: email" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cep</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: zip" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Logradouro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Número</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: number" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Complemento</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: complement" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Bairro</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: town" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Cidade</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: district" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>UF</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: uf" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.SalvarPaciente">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4">
+            <a href="#" class="btn btn-primary btn-xs pull-right" data-bind="click: $root.LimparModal" data-toggle="modal" data-target="#pacienteModal"><b>+</b> Cadastrar Paciente</a>
+        </div>
+    </div>
+    <div class="row col-md-12  custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $root.ListaPacientes">
+                <tr>
+                    <td data-bind="text: name"></td>
+                    <td data-bind="text: cpf"></td>
+                    <td class="text-center"><a class='btn btn-info btn-xs' data-bind="click: $root.Edit"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    var ScreenModel = function () {
+        var self = this;
+        self.Paciente = new pacienteModel();
+        var src = @Html.Raw(Json.Serialize(Model))
+        self.ListaPacientes = ko.observableArray(src);
+
+        self.SalvarPaciente = function () {
+            $.ajax({
+                url: "@Url.Action("Salvar")",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON(self.Paciente),
+                 cache: false,
+                 success: function (data) {
+
+                     $("#pacienteModal").modal("hide");
+
+                     window.location.href = "@Url.Action("Index")";
+
+                 }
+                });
+        };
+
+        self.Edit = function (item) {
+            $("#pacienteModal").modal("show");
+            self.Paciente.id(item.id);
+            self.Paciente.name(item.name);
+            self.Paciente.mon(item.mon);
+            self.Paciente.dad(item.dad);
+            self.Paciente.gender(item.gender);
+            self.Paciente.birthdate(item.birthdate);
+            self.Paciente.cpf(item.cpf);
+            self.Paciente.cns(item.cns);
+            self.Paciente.phone(item.phone);
+            self.Paciente.mobile(item.mobile);
+            self.Paciente.email(item.email);
+            self.Paciente.address(item.address);
+            self.Paciente.number(item.number);
+            self.Paciente.complement(item.complement);
+            self.Paciente.district(item.district);
+            self.Paciente.town(item.town);
+            self.Paciente.uf(item.uf);
+            self.Paciente.zip(item.zip);
+        };
+        self.LimparModal = function () {
+            self.Paciente.id(null);
+            self.Paciente.name("");
+            self.Paciente.mon("");
+            self.Paciente.dad("");
+            self.Paciente.gender("");
+            self.Paciente.birthdate("");
+            self.Paciente.cpf("");
+            self.Paciente.cns("");
+            self.Paciente.phone("");
+            self.Paciente.mobile("");
+            self.Paciente.email("");
+            self.Paciente.address("");
+            self.Paciente.number("");
+            self.Paciente.complement("");
+            self.Paciente.district("");
+            self.Paciente.town("");
+            self.Paciente.uf("");
+            self.Paciente.zip("");
+
+
+
+        };
+    };
+    var pacienteModel = function () {
+        var self = this;
+        self.id = ko.observable(null);
+        self.isResponsible = ko.observable(true);
+        self.isDependent = ko.observable(false);
+        self.user_id = ko.observable();
+        self.name = ko.observable();
+        self.mon = ko.observable();
+        self.dad = ko.observable();
+        self.gender = ko.observable();
+        self.birthdate = ko.observable();
+        self.cpf = ko.observable();
+        self.cns = ko.observable();
+        self.phone = ko.observable();
+        self.mobile = ko.observable();
+        self.email = ko.observable();
+        self.address = ko.observable();
+        self.number = ko.observable();
+        self.complement = ko.observable();
+        self.district = ko.observable();
+        self.town = ko.observable();
+        self.uf = ko.observable();
+        self.zip = ko.observable();
+
+    };
+</script>

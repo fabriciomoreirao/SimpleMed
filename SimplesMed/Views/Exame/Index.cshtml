@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="modal fade " id="exameModal" tabindex="-1" aria-labelledby="laboratorioModalLabel" aria-hidden="true" data-bind="with: Exame">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="laboratorioModalLabel">Cadastro de exame</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Nome do exame</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: exam_name" />
+                    </div>
+                </div>                            
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Tipo do exame</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input class="form-control" data-bind="value: exam_type" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label>Status</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" data-bind="options: $root.ListaStatus(), value: status, optionsCaption: 'Selecione...'"></select>
+                    </div>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.SalvarExames">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4">
+            
+        </div>
+    </div>
+    <div class="row col-md-12  custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Nome exame</th>
+                    <th>Tipo exame</th>
+                    <th>Data solicitação</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $root.ListaExames">
+                <tr>
+                    <td data-bind="text: exam_name"></td>
+                    <td data-bind="text: exam_type"></td>
+                    <td data-bind="text: created_at"></td>
+                    <td class="text-center"><a class='btn btn-info btn-xs' data-bind="click: $root.Edit"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    var ScreenModel = function () {
+        var self = this;
+        self.Exame = new exameModel();
+        var src = @Html.Raw(Json.Serialize(Model))
+            self.ListaExames = ko.observableArray(src);
+        self.ListaStatus = ko.observableArray();
+
+        self.ListaStatus.push("Solicitado");
+        self.ListaStatus.push("Em andamento");
+        self.ListaStatus.push("Pronto");
+
+
+        self.SalvarExames = function () {
+            $.ajax({
+                url: "@Url.Action("Salvar")",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON(self.Exame),
+                 cache: false,
+                 success: function (data) {
+
+                     $("#exameModal").modal("hide");
+
+                     window.location.href = "@Url.Action("Index")";
+                 }
+                });
+        };
+
+        self.Edit = function (item) {
+            $("#exameModal").modal("show");
+            self.Exame.id(item.id);
+            self.Exame.complementaryExameId(item.complementaryExameId);
+            self.Exame.exam_type(item.exam_type);
+            self.Exame.exam_name(item.exam_name);
+            self.Exame.status(item.status);
+            self.Exame.created_at(item.created_at);
+        };
+   
+    };
+    var exameModel = function () {
+        var self = this;
+        self.id = ko.observable(null);
+        self.complementaryExameId = ko.observable();
+        self.exam_type = ko.observable();
+        self.exam_name = ko.observable();
+        self.is_changed = ko.observable();
+        self.created_at = ko.observable();
+        self.updated_at = ko.observable();
+        self.status = ko.observable();
+    };
+</script>
